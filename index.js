@@ -10,6 +10,7 @@ app.use("/player", express.static(path.join(__dirname, "Player-Client")));
 let players = [];
 let gameResult = "";
 let gameReset = false;
+let timeoutId = null;
 
 app.get('/ataques', (req, res) => { 
   const ready = players.length === 2 && players.every(p => p.ataque);
@@ -30,9 +31,17 @@ app.post('/ataques', (request, res) => {
       players.push({ player, name, ataque: ataque || null }); 
   }
 
-  if (players.length === 2 && players.every(p => p.ataque)) {
-    winnerGame(); 
-  }
+  if (players.length === 2) {
+    if (!timeoutId) {
+        startAttackTimer(); 
+    }
+
+    if (players.every(p => p.ataque)) {
+        clearTimeout(timeoutId); 
+        timeoutId = null;
+        winnerGame(); 
+    }
+}
 
   res.json({ players, ready: players.length === 2 });
 });
@@ -56,6 +65,22 @@ app.get("/estado", (req, res) => {
   res.json({ ready });
 });
 
+function startAttackTimer() {
+  timeoutId = setTimeout(() => {
+      const p1 = players.find(p => p.player === 1);
+      const p2 = players.find(p => p.player === 2);
+
+      if (!p1.ataque && p2.ataque) {
+          gameResult = `${p2.name} gana automáticamente porque ${p1.name} no eligió a tiempo`;
+      } else if (!p2.ataque && p1.ataque) {
+          gameResult = `${p1.name} gana automáticamente porque ${p2.name} no eligió a tiempo`;
+      } else {
+          gameResult = "Nadie eligió, partida cancelada";
+      }
+
+      console.log(gameResult);
+  }, 10000);
+}
 
 function winnerGame() {
   const [p1, p2] = players;
@@ -86,6 +111,7 @@ function resetGame() {
   players = [];
   gameResult = "";
   gameReset = true; 
+  timeoutId = null;
 
   setTimeout(() => {
     gameReset = false;

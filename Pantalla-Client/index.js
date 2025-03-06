@@ -1,15 +1,8 @@
-const startGameBtn = document.getElementById("start-game-btn");
-
-if (localStorage.getItem("gameStarted")) {
-  startGameBtn.style.display = "none";
-}
-
-startGameBtn.addEventListener("click", () => {
+document.getElementById("start-game-btn").addEventListener("click", () => {
   window.open("http://localhost:5050/player/?player=1", "_blank");
   window.open("http://localhost:5050/player/?player=2", "_blank");
 
-  startGameBtn.style.display = "none";
-  localStorage.setItem("gameStarted", "true");
+  document.getElementById("start-game-btn").style.display = "none"
 });
 
 document.getElementById("resultado").style.display = "none"
@@ -94,9 +87,8 @@ function checkResetStatus() {
 setInterval(checkResetStatus, 1000);
 
 function resetGame() {
-  document.getElementById("start-game-btn").style.display = "none"
   fetch("http://localhost:5050/reset", { method: "POST" })
-    .catch(error => console.error("Error reiniciando el juego:", error));
+  .catch(error => console.error("Error reiniciando el juego:", error));
 }
 checkPlayersReady();
 
