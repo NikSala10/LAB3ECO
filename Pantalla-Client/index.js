@@ -1,6 +1,15 @@
-document.getElementById("start-game-btn").addEventListener("click", () => {
+const startGameBtn = document.getElementById("start-game-btn");
+
+if (localStorage.getItem("gameStarted")) {
+  startGameBtn.style.display = "none";
+}
+
+startGameBtn.addEventListener("click", () => {
   window.open("http://localhost:5050/player/?player=1", "_blank");
   window.open("http://localhost:5050/player/?player=2", "_blank");
+
+  startGameBtn.style.display = "none";
+  localStorage.setItem("gameStarted", "true");
 });
 
 document.getElementById("resultado").style.display = "none"
