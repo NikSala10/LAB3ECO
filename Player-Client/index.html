@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLAYER</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    
+    <div id="ataques">
+        <button id="piedra" disabled>🪨</button>
+        <button id="papel" disabled>📃</button>
+        <button id="tijera" disabled>✂️</button>
+    </div>
+    <p id="waiting-message" style="display: none;">Esperando al otro jugador...</p>
+    <div id="name">
+        <p>Ingresa tu nombre</p>
+        <input type="text" id="player-name" placeholder="">
+        <button id="send-btn">Enviar</button>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+
+</html>

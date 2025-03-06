@@ -1,0 +1,7 @@
+### Petición GET para obtener los datos de los usuarios
+
+GET http://localhost:5050/ataques
+
+###
+
+
