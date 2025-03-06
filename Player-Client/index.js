@@ -116,7 +116,7 @@ function checkResetStatus() {
     .then(response => response.json())
     .then(data => {
       if (data.reset) {
-        location.reload(); 
+        window.close(); 
       }
     })
     .catch(error => console.error("Error verificando estado de reinicio:", error));
